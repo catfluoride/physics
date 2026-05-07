@@ -10,34 +10,6 @@ from matplotlib.patches import Circle, FancyArrowPatch
 import matplotlib.patches as mpatches
 from matplotlib.widgets import Button
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Configuración de la figura
 fig, ax = plt.subplots(1, 1, figsize=(14, 10))
 ax.set_xlim(-6, 28)
@@ -249,28 +221,6 @@ ax.text(3.5*np.cos(alpha), 3.5*np.sin(alpha), r'$\vec{v}_{viento}$',
 ax.set_title('Medio material en movimiento (viento)\n'
              'Onda esférica con EMISOR y RECEPTOR FIJOS',
              fontsize=14, fontweight='bold', pad=20)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Crear animación
 t_vals = np.linspace(0.01, dt_llegada * 1, 150)
