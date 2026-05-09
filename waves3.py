@@ -138,8 +138,8 @@ def animate(t):
     # El texto se mantiene fijo en (8, 12), pero la flecha apunta a punto_emision
     anotacion_centro.xy = (punto_emision[0], punto_emision[1])  # ← DESTINO DE LA FLECHA
     anotacion_centro.set_text(
-        'Lugar hasta donde se ha\ndesplazado tras un Δt el\n'
-        'punto del medio en el que\nse emitió la onda, debido\na la velocidad del viento'
+        'Place to which the point of the medium in\n which the wave has been emitted has\ndisplaced after Δt '
+        'due to wind velocity'
     )
     anotacion_centro.set_visible(True)
 
@@ -155,45 +155,45 @@ def animate(t):
     proy_onda = c_dt * np.cos(beta)
 
     info_text = (
-        f'  TIEMPO: t = {t:.3f} s / Δt = {dt_llegada:.3f} s\n'
+        f'  Time: t = {t:.3f} s / Δt = {dt_llegada:.3f} s\n'
         f'\n'
-        f'  DESPLAZAMIENTO DEL MEDIO:\n'
-        f'    v_viento·Δt = {viento_dt:.2f} m\n'
-        f'    ángulo α = {np.degrees(alpha):.1f}°\n'
-        f'    centro de onda: ({punto_emision[0]:.2f}, {punto_emision[1]:.2f})\n'
+        f'  Displacement of medium:\n'
+        f'    v_wind·Δt = {viento_dt:.2f} m\n'
+        f'    α angle= {np.degrees(alpha):.1f}°\n'
+        f'    center of the wave: ({punto_emision[0]:.2f}, {punto_emision[1]:.2f})\n'
         f'\n'
-        f'  PROPAGACIÓN DE LA ONDA:\n'
+        f'  Propagation of wave:\n'
         f'    c·Δt = {c_dt:.2f} m\n'
-        f'    ángulo β = {np.degrees(beta):.1f}°\n'
+        f'    β angle= {np.degrees(beta):.1f}°\n'
         f'\n'
-        f'  DISTANCIA EMISOR-RECEPTOR:\n'
+        f'  Source-observer distance:\n'
         f'    L = c\'·Δt = {L:.2f} m\n'
         f'\n'
-        f'  ECUACIÓN:\n'
-        f'    L = v_viento·Δt·cos(α) + c·Δt·cos(β)\n'
+        f'  Equation:\n'
+        f'    L = v_wind·Δt·cos(α) + c·Δt·cos(β)\n'
         f'    {L:.2f} = {proy_viento:.2f} + {proy_onda:.2f}\n'
-        f'\n  VELOCIDAD APARENTE:\n'
-        f'    c\' = L/t = {L/t:.2f} m/s (instantánea)\n'
-        f'    c\' final = {c_aparente:.2f} m/s\n'
+        f'\n  Apparent velocity:\n'
+        f'    c\' = L/t = {L/t:.2f} m/s (instant)\n'
+        f'    Final c\' final = {c_aparente:.2f} m/s\n'
 
     )
 
-    estado = "✓ ONDA LLEGÓ AL RECEPTOR" if onda_llego else "○ Onda propagándose..."
+    estado = "✓ Wave arrived at observer" if onda_llego else "○ Wave propagating..."
     info_text += f'\n  {estado}'
 
     texto_info.set_text(info_text)
 
     leyenda_text = (
-        'LEYENDA:\n'
-        '  ■ Rojo: Emisor (fijo en t=0)\n'
-        '  ■ Naranja: Receptor (fijo)\n'
-        '  ■ Naranja: Centro efectivo de la onda\n'
-        '      (se mueve con el viento)\n'
-        '  --- Negro discontinuo: Onda esférica\n'
-        '  → Azul: Vector viento·Δt\n'
-        '  ··· Azul: Trayectoria del punto de emisión\n'
-        '  — Negro: Trayectoria de la onda c·Δt\n'
-        '  ··· Negro: Distancia aparente L = c\'·Δt'
+        'Legend:\n'
+        '  ■ Red: Source (fixed at t=0)\n'
+        '  ■ Orange: Observer (fixed)\n'
+        '  ■ Orange: Center of wave\n'
+        '      (moves with the wind)\n'
+        '  --- Dashed black: spherical wave\n'
+        '  → Blue: wind vector·Δt\n'
+        '  ··· Blue: path of the emitting point\n'
+        '  — Black: path of the wave c·Δt\n'
+        '  ··· Black: Apparent distance L = c\'·Δt'
     )
     texto_leyenda.set_text(leyenda_text)
 
@@ -202,24 +202,24 @@ def animate(t):
             texto_info, texto_leyenda, anotacion_centro)
 
 # Anotaciones estáticas
-ax.annotate('Emisor\n(emite onda en t=0)',
-            xy=(emisor_pos[0], emisor_pos[1]), xytext=(-5, -6),
+ax.annotate('Source\n(emits wave at t=0)',
+            xy=(emisor_pos[0], emisor_pos[1]), xytext=(-2, -2),
             arrowprops=dict(arrowstyle='->', color='red', lw=1.5),
             fontsize=10, color='red', fontweight='bold', ha='center')
 
-ax.annotate('Receptor\n(fijo)',
-            xy=(receptor_pos[0], receptor_pos[1]), xytext=(receptor_pos[0]+3, -5),
+ax.annotate('Observer\n(fixed)',
+            xy=(receptor_pos[0], receptor_pos[1]), xytext=(receptor_pos[0]+2, -2),
             arrowprops=dict(arrowstyle='->', color='red', lw=1.5),
             fontsize=10, color='red', fontweight='bold')
 
 # Flecha del viento en leyenda
 ax.annotate('', xy=(3*np.cos(alpha), 3*np.sin(alpha)), xytext=(0, 0),
             arrowprops=dict(arrowstyle='->', color='blue', lw=2))
-ax.text(3.5*np.cos(alpha), 3.5*np.sin(alpha), r'$\vec{v}_{viento}$',
+ax.text(3.5*np.cos(alpha), 3.5*np.sin(alpha), r'$\vec{v}_{wind}$',
         fontsize=12, color='blue', fontweight='bold')
 
-ax.set_title('Medio material en movimiento (viento)\n'
-             'Onda esférica con EMISOR y RECEPTOR FIJOS',
+ax.set_title('Moving material medium (wind)\n'
+             'Spherical wave with stationary source and observer',
              fontsize=14, fontweight='bold', pad=20)
 
 # Crear animación
@@ -231,20 +231,20 @@ pausado = [False]
 def toggle_pausa(event):
     if pausado[0]:
         anim.event_source.start()
-        boton.label.set_text('Pausa')
+        boton.label.set_text('Pause')
     else:
         anim.event_source.stop()
-        boton.label.set_text('Continuar')
+        boton.label.set_text('Continue')
     pausado[0] = not pausado[0]
 
 # Crear área del botón (debajo de la figura)
 ax_boton = fig.add_axes([0.35, 0.01, 0.15, 0.05])
-boton = Button(ax_boton, 'Pausa', color='lightblue', hovercolor='skyblue')
+boton = Button(ax_boton, 'Pause', color='lightblue', hovercolor='skyblue')
 boton.on_clicked(toggle_pausa)
 
 # Crear animación (sin repeat como pediste antes)
 anim = FuncAnimation(fig, animate, init_func=init, frames=t_vals,
-                     interval=80, blit=True, repeat=True)
+                     interval=10, blit=True, repeat=True)
 
 plt.show()
 plt.tight_layout()
